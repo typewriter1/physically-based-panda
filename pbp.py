@@ -5,7 +5,6 @@ from direct.showbase.ShowBase import ShowBase
 
 load_prc_file_data("",
 """
-show-frame-rate-meter true
 framebuffer-multisample true
 multisamples 2
 """
@@ -75,8 +74,6 @@ class ShadingFramework:
         self.root.set_shader_input("lightPositions", light_positions)
         self.root.set_shader_input("lightColors", light_colors)
         self.root.set_shader_input("lightIntensities", light_intensities)
-##        self.root.set_shader_input("lightPosition", self.lights[0].pos)
-##        self.root.set_shader_input("lightColor", self.lights[0].color)
         p = base.camera.get_pos(render)
         self.root.set_shader_input("camPos", (p[0], p[1], p[2]))
         self.root.set_shader_input("numLights", len(self.lights))
