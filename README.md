@@ -15,5 +15,10 @@ Current:
 - Lights
 
 Planned:
+- Image based lighting (cubemaps)
+- Use built-in Panda3D lighting system
 - Shadows (p3d_ShadowViewMatrix)
+- Fog
+- AO (maps/SSAO)
+- SSR
 
