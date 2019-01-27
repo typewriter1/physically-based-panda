@@ -10,12 +10,12 @@ Copy and paste the contents of the repository into the folder of the project and
 ## Features
 
 Current:
-- PBR
+- PBR shading: lambert for diffuse, GGX distribution, GGX-Schlick geometry, Smith geometry and  Schlick fresnel
 - Materials and textures  using Panda3D Texture and Material objects (albedo, roughness, metallic): the final value used is the material value multiplied by texture value
-- Point lights, using Panda3D PointLights
+- Point  and directional lights, using Panda3D PointLights
 
 Planned:
-- Directional/Spot lights
+- Spot lights
 - Image based lighting (cubemaps)
 - Shadows (p3d_ShadowViewMatrix)
 - Fog
