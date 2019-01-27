@@ -42,39 +42,15 @@ def color_from_temperature(temp):
             blue = max(0, blue)
             blue = min(255, blue)
     return (red / 255, green / 255, blue / 255)
-            
-class Light:
-    def __init__(self, pos = (0, 0, 0), color = color_from_temperature(3000), intensity = 700):
-        self.pos = pos
-        self.color = color
-        self.intensity = intensity / 10
-
-    def __repr__(self):
-        return "Light at " + str(self.pos) + "of color " + str(self.color)
 
 class ShadingFramework:
     def __init__(self, root):
         self.root = root
         self.root.set_antialias(AntialiasAttrib.MAuto)
-        self.lights = []
         base.task_mgr.add(self.update, "update")
 
-    def add_light(self, light):
-        self.lights.append(light)
-        print(self.lights)
+        self.shader = Shader.load(Shader.SL_GLSL, vertex = "shaders/main.vert", fragment = "shaders/main.frag")
+        self.root.set_shader(self.shader)
 
     def update(self, task):
-        light_positions = []
-        light_colors = []
-        light_intensities = []
-        for light in self.lights:
-            light_positions.append(light.pos)
-            light_colors.append(light.color)
-            light_intensities.append(light.intensity)
-        self.root.set_shader_input("lightPositions", light_positions)
-        self.root.set_shader_input("lightColors", light_colors)
-        self.root.set_shader_input("lightIntensities", light_intensities)
-        p = base.camera.get_pos(render)
-        self.root.set_shader_input("camPos", (p[0], p[1], p[2]))
-        self.root.set_shader_input("numLights", len(self.lights))
         return task.cont
