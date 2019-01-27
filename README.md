@@ -13,11 +13,11 @@ Current:
 - PBR shading: lambert for diffuse, GGX distribution, GGX-Schlick geometry, Smith geometry and  Schlick fresnel
 - Materials and textures  using Panda3D Texture and Material objects (albedo, roughness, metallic): the final value used is the material value multiplied by texture value
 - Point  and directional lights, using Panda3D PointLights
+- Shadows: __note that when using point lights and shadow mapping together there may be an error thrown every frame - if this happens either avoid using point lights or disable shadows in the shader__
 
 Planned:
 - Spot lights
 - Image based lighting (cubemaps)
-- Shadows (p3d_ShadowViewMatrix)
 - Fog
 - AO (maps/SSAO)
 - SSR
