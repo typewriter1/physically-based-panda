@@ -11,13 +11,12 @@ Copy and paste the contents of the repository into the folder of the project and
 
 Current:
 - PBR
-- Materials and textures (albedo, roughness, metallic): the final value used is the material value multiplied by texture value
-- Point lights
+- Materials and textures  using Panda3D Texture and Material objects (albedo, roughness, metallic): the final value used is the material value multiplied by texture value
+- Point lights, using Panda3D PointLights
 
 Planned:
 - Directional/Spot lights
 - Image based lighting (cubemaps)
-- Use built-in Panda3D lighting system
 - Shadows (p3d_ShadowViewMatrix)
 - Fog
 - AO (maps/SSAO)
