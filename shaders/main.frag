@@ -2,7 +2,7 @@
 
 in vec2 TexCoord;
 in vec3 Normal;
-in vec3 Vertex;
+in vec4 Vertex;
 
 out vec4 FragColor;
 
@@ -78,7 +78,7 @@ void main()
 	float roughness = p3d_Material.roughness * texture(p3d_Texture1, TexCoord).r;
 
     vec3 N = normalize(Normal);
-    vec3 V = normalize(-Vertex);
+    vec3 V = normalize(-Vertex.xyz);
 
     // calculate reflectance at normal incidence; if dia-electric (like plastic) use F0 
     // of 0.04 and if it's a metal, use the albedo color as F0 (metallic workflow)    
@@ -87,13 +87,25 @@ void main()
 
     // reflectance equation
     vec3 Lo = vec3(0.0);
+	float shadow;
     for(int i = 0; i < p3d_LightSource.length(); ++i) 
     {
-        // calculate point light values
-        vec3 L = p3d_LightSource[i].position.xyz - Vertex; 
-        float distance = length(L);
-        float attenuation = 1 / (distance * distance);
-        vec3 radiance = p3d_LightSource[i].color.rgb * attenuation;
+		
+		vec3 L;
+		float attenuation;
+		if(p3d_LightSource[i].position.w == 0.0){
+			//It is a directional light
+			L = p3d_LightSource[i].position.xyz;
+			attenuation = 1.0;
+			
+		}
+		else {
+			// It is a point light
+			L = p3d_LightSource[i].position.xyz - Vertex.xyz; 
+			float distance = length(L);
+			attenuation = 1 / (distance * distance);
+		}
+		vec3 radiance = p3d_LightSource[i].color.rgb * attenuation;
 		L = normalize(L);
 		vec3 H = normalize(V + L);
 
@@ -116,12 +128,17 @@ void main()
         // have diffuse lighting, or a linear blend if partly metal (pure metals
         // have no diffuse light).
         kD *= 1.0 - metallic;	  
-
+		
         // scale light by NdotL
-        float NdotL = max(dot(N, L), 0.0);        
+        float NdotL = max(dot(N, L), 0.0);   
+
+		// shadows
+		shadow = textureProj(
+				p3d_LightSource[i].shadowMap, p3d_LightSource[i].shadowViewMatrix * Vertex
+			);
 
         // add to outgoing radiance Lo
-        Lo += (kD * albedo / PI + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
+        Lo += (kD * albedo / PI + specular) * radiance * NdotL * shadow;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
     }   
     
     // ambient lighting (note that the next IBL tutorial will replace 
