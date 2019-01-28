@@ -25,6 +25,13 @@ uniform struct p3d_LightSourceParameters {
     sampler2DShadow shadowMap;
 } p3d_LightSource[8];
 
+uniform struct p3d_FogParameters {
+	vec4 color;
+	float density;
+	float start;
+	float end;
+} p3d_Fog;
+
 uniform sampler2D p3d_Texture0;
 uniform sampler2D p3d_Texture1;
 uniform sampler2D p3d_Texture2;
@@ -88,6 +95,7 @@ void main()
     // reflectance equation
     vec3 Lo = vec3(0.0);
 	float shadow;
+	
     for(int i = 0; i < p3d_LightSource.length(); ++i) 
     {
 		
@@ -130,7 +138,9 @@ void main()
         kD *= 1.0 - metallic;	  
 		
         // scale light by NdotL
-        float NdotL = max(dot(N, L), 0.0);   
+        float NdotL = max(dot(N, L), 0.0);
+
+		
 
 		// shadows
 		shadow = textureProj(
@@ -150,7 +160,13 @@ void main()
     // HDR tonemapping
     color = color / (color + vec3(1.0));
     //gamma correct
-    color = pow(color, vec3(1.0/2.2)); 
+    color = pow(color, vec3(1.0/2.2));
 
-    FragColor = vec4(color, 1.0);
+	// fog
+	float dist = distance(Vertex, vec4(0, 0, 0, 1));
+	float fogFactor = 1.0 / exp((dist * p3d_Fog.density) * (dist * p3d_Fog.density));
+	fogFactor = clamp(fogFactor, 0.0, 1.0);	
+
+	vec4 finalColor = mix(vec4(color, 1.0), p3d_Fog.color, 1 - fogFactor);
+	FragColor = finalColor;
 }
