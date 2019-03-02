@@ -13,7 +13,7 @@ Copy and paste the contents of the repository into the folder of the project and
 - PBR shading: lambert for diffuse, GGX distribution, GGX-Schlick geometry, Smith geometry and  Schlick fresnel
 - Materials and textures  using Panda3D Texture and Material objects (albedo, roughness, metallic): the final value used is the material value multiplied by texture value
 - Point  and directional lights, using Panda3D PointLights
-- Shadows: __note that when using point lights and shadow mapping together there may be an error thrown every frame - if this happens either avoid using point lights or disable shadows in the shader__
+- Shadows: __note that when using point lights and shadow mapping together there may be an error thrown every frame -- if this happens either avoid using point lights or disable shadows in the shader__
 - Fog, using Panda3D Fog objects
 
 ### Planned:
