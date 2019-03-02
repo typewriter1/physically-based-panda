@@ -7,6 +7,25 @@ A basic GLSL shading framework for the Panda3D game engine, supporting physicall
 
 Copy and paste the contents of the repository into the folder of the project and import from python. Instructions about creating assets with PBR materials can be found on [this wiki page](https://github.com/typewriter1/physically-based-panda/wiki/Creating-Assets-for-physically-based-panda).
 
+To enable, add the following to your code:
+```python
+#Imports
+from panda3d.core import *
+from direct.showbase.ShowBase import ShowBase
+from pbp import *
+...
+
+class Game(ShowBase):
+    def __init__(self):
+        ShowBase.__init__(self)
+        self.framework = pbp.ShadingFramework(self.render) # Pass the node to apply the shader to. The shader will also be applied to children
+
+...
+
+game = Game()
+game.run()
+```
+
 ## Features
 
 ### Current:
