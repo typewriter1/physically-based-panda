@@ -12,7 +12,8 @@ To enable, add the following to your code:
 #Imports
 from panda3d.core import *
 from direct.showbase.ShowBase import ShowBase
-from pbp import *
+
+import pbp
 ...
 
 class Game(ShowBase):
