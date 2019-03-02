@@ -5,7 +5,7 @@ A basic GLSL shading framework for the Panda3D game engine, supporting physicall
 
 ## How to Use
 
-Copy and paste the contents of the repository into the folder of the project and import from python.
+Copy and paste the contents of the repository into the folder of the project and import from python. Instructions about creating assets with PBR materials can be found on [this wiki page](https://github.com/typewriter1/physically-based-panda/wiki/Creating-Assets-for-physically-based-panda).
 
 ## Features
 
